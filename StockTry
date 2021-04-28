@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<!-- 測試加載JQ成功 
+script>
+alert(typeof jQuery)
+</script>
+-->
+
+<meta charset="BIG5">
+<title>股票買賣試算表</title>
+</head>
+<body>
+
+
+
+	<span>買價/股</span>
+	<input name="buy" id="buy">
+	<br>
+	<span>賣價/股</span>
+	<input name="sell" id="sell">
+	<br>
+	<span>張數</span>
+	<input name="index" id="index">
+	<br>
+	<input type="submit" value="試算" id="button1">
+	<br>
+
+	<span>買進手續費</span>
+	<span id="buyfee"></span>
+	<br>
+
+	<span>賣出手續費</span>
+	<span id="sellfee"></span>
+	<br>
+
+	<span>總手續費</span>
+	<span id="talfee"></span>
+	<br>
+
+	<span>交易稅(0.3%)</span>
+	<span id="tax"></span>
+	<br>
+
+	<span>帳面獲利</span>
+	<span id="subtract"></span>
+	<br>
+
+	<span>實際獲利</span>
+	<span id="realsubtract"></span>
+	<br>
+
+	<span>報酬率</span>
+	<span id="rate"></span>
+	<br>
+
+	<script>
+		$(function() { //$(function)
+			var fee =0.001425;//手續費
+		
+			$("#button1").click(function() {
+
+				var buy = $("#buy").val();//每股買價
+				var sell = $("#sell").val();//每股賣價
+				var index = $("#index").val();//張數
+				
+				var buyfee=buy*fee*1000;//買進手續費
+				var sellfee=sell*fee*1000;//賣出手續費
+				var talfee =((sell*fee*1000)+(buy*fee*1000)*index);//總手續費
+				var tax = sell*3*index;//交易稅
+				var subtract =(sell-buy)*1000*index;//帳面獲利
+				var realsubtract =subtract-talfee-tax;//實際獲利
+				var rate = ((subtract-talfee-tax)/(buy*10*index));//報酬率
+				
+				$("#buyfee").html(buyfee.toFixed(2)+"元");//買進手續費
+				$("#sellfee").html(sellfee.toFixed(2)+"元");//賣出手續費
+				$("#talfee").html(talfee.toFixed(2)+"元");//總手續費
+				$("#tax").html(tax.toFixed(2)+"元");//交易稅
+				$("#subtract").html(subtract.toFixed(2)+"元");//帳面獲利
+				$("#realsubtract").html(realsubtract.toFixed(2)+"元");//實際獲利
+				$("#rate").html(rate.toFixed(2)+"%");//報酬率
+				
+			});
+		
+		});
+	</script>
+
+</body>
+</html>
